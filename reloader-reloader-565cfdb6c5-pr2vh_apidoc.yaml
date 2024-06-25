@@ -1,0 +1,153 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 531b83de14844cbd9dfdde57df79ee77b6233bed8437fb4541dcaf08c25ac92b
+    cni.projectcalico.org/podIP: 172.30.38.123/32
+    cni.projectcalico.org/podIPs: 172.30.38.123/32
+  creationTimestamp: "2024-06-16T10:49:10Z"
+  generateName: reloader-reloader-565cfdb6c5-
+  labels:
+    app: reloader-reloader
+    app.kubernetes.io/managed-by: Helm
+    chart: reloader-1.0.107
+    group: com.stakater.platform
+    heritage: Helm
+    pod-template-hash: 565cfdb6c5
+    provider: stakater
+    release: reloader
+    version: v1.0.107
+  name: reloader-reloader-565cfdb6c5-pr2vh
+  namespace: multi-tenant-ca-staging-us-south-01
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: reloader-reloader-565cfdb6c5
+    uid: 791148ee-0d6f-4371-a4c4-9b9b59cbc948
+  resourceVersion: "494455280"
+  uid: 55047480-e8db-41a9-b58f-800cb833702b
+spec:
+  containers:
+  - env:
+    - name: KUBERNETES_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    image: ghcr.io/stakater/reloader:v1.0.107
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 5
+      httpGet:
+        path: /live
+        port: http
+        scheme: HTTP
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 5
+    name: reloader-reloader
+    ports:
+    - containerPort: 9090
+      name: http
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 5
+      httpGet:
+        path: /metrics
+        port: http
+        scheme: HTTP
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 5
+    resources: {}
+    securityContext: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-p7h8f
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: 10.94.247.36
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  serviceAccount: reloader-reloader
+  serviceAccountName: reloader-reloader
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 600
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 600
+  volumes:
+  - name: kube-api-access-p7h8f
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-16T10:49:10Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-16T10:49:30Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-16T10:49:30Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-16T10:49:10Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://27d408b9f611cf9bc06632a5868256593727b4bad6c0481e0f2b80233d9a26a5
+    image: ghcr.io/stakater/reloader:v1.0.107
+    imageID: ghcr.io/stakater/reloader@sha256:71661225041308120f342d5c995154e77eb45a5ea95d3874ef4f4a64bdc5b2ed
+    lastState: {}
+    name: reloader-reloader
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-06-16T10:49:11Z"
+  hostIP: 10.94.247.36
+  phase: Running
+  podIP: 172.30.38.123
+  podIPs:
+  - ip: 172.30.38.123
+  qosClass: BestEffort
+  startTime: "2024-06-16T10:49:10Z"

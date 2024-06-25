@@ -1,0 +1,3 @@
+eem-gateway-instance-ibm-egw-nwp
+eem-manager-instance-ibm-eem-nwp
+ibm-eem-allow-webhook

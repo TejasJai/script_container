@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: pentest-pod1
+spec:
+ containers:
+   - name: pentest-pod1
+     image: us-docker.pkg.dev/im-prod-212116/zos/automator:2024.3.0-rc 
+     command: [ "sleep", "infinity" ]
+     securityContext:
+       runAsUser: 0
+       privileged: true

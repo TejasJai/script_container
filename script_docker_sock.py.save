@@ -1,0 +1,59 @@
+
+
+proj_dir = "/root/container"
+ns_list = proj_dir + "/ns_list.txt"
+
+print("Project directory path: %s" %(proj_dir))
+
+print("namespaces to scan are: ")
+with open(ns_list,"rt") as f:
+    print(f.read())
+
+with open(ns_list,"rt") as file:
+    for ns in file:
+        ns = ns.strip("\n")
+        print("*** Testing NS: %s" %(ns))
+        #cmd = r"kubectl get pods -n " + ns
+        #cmd1 = ' | grep -v "NAME[[:blank:]]*READY[[:blank:]]*STATUS" | cut -d" " -f1 ' + '> ' + ns + '_pods.txt'
+        #cmd = cmd + cmd1
+        #print("Run cmd: %s" %(cmd))
+        #os.system(cmd)
+        print("\n")
+
+        with open(ns + '_pods.txt', "rt") as pod:
+            for p in pod:
+                p = p.strip("\n")
+                #cmd = 'kubectl describe pod' + r"/" + p + ' -n ' + ns + ' | grep -B1 "Container ID:" | grep -v "Container ID:" | grep ":" | cut -d":" -f1 | '
+                #cmd1 = "sed -e's/ *//g'" + ' > ' + ns + '_' + p + '_containers.txt'
+                #cmd = cmd + cmd1
+                #print("Run cmd: %s" %(cmd))
+                #os.system(cmd)
+                #print("\n")
+
+                with open(ns + '_' + p + '_containers.txt', "rt") as cont:
+                    for c in cont:
+                        c = c.strip("\n")
+                        cmd = 'kubectl exec ' + p + ' -n ' + ns + ' -c ' + c + r" -- awk 'function hextodec(str,ret,n,i,k,c){
+    ret = 0
+    n = length(str)
+    for (i = 1; i <= n; i++) {
+        c = tolower(substr(str, i, 1))
+        k = index("123456789abcdef", c)
+        ret = ret * 16 + k
+    }
+    return ret
+}
+function getIP(str,ret){
+    ret=hextodec(substr(str,index(str,":")-2,2)); 
+    for (i=5; i>0; i-=2) {
+        ret = ret"."hextodec(substr(str,i,2))
+    }
+    ret = ret":"hextodec(substr(str,index(str,":")+1,4))
+    return ret
+} 
+NR > 1 {{if(NR==2)print "Local - Remote";local=getIP($2);remote=getIP($3)}{print local" - "remote}}' /proc/net/tcp"
+                        print("Run cmd: %s" %(cmd))
+                        os.system(cmd)
+                        #print("\n")
+
+print("DONE FULL TESTING")

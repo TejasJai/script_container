@@ -1,0 +1,15 @@
+roja-compliance-5849479b56-bwdtd
+roja-ingestion-7745c55fc5-q76qv
+roja-minio-0
+roja-minio-1
+roja-minio-2
+roja-pipeline-c74cf56cf-8xn8p
+roja-portal-gw-58c96d85b4-jvxkt
+roja-postgres-appdb-66c687cbf9-bhd85
+roja-postgres-configdb-585647cd64-kntx5
+roja-py-utils-5469b8f5f5-rbftk
+roja-ui-5c99d9c9ff-nfwjm
+rojacore-548648595f-b572m
+roja-mgmt-init-tls-job-tnmqw
+roja-mgmt-job-bnqf9
+roja-pre-job-pv5l6
